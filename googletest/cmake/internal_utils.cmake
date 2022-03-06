@@ -150,6 +150,14 @@ function(cxx_library_with_type name type cxx_flags)
   # type can be either STATIC or SHARED to denote a static or shared library.
   # ARGN refers to additional arguments after 'cxx_flags'.
   add_library(${name} ${type} ${ARGN})
+
+  # load sanitizer functions
+  find_package(Sanitizers)
+
+  if(Sanitizers_FOUND)
+     add_sanitize_thread(${name})
+  endif()
+
   add_library(${cmake_package_name}::${name} ALIAS ${name})
   set_target_properties(${name}
     PROPERTIES
