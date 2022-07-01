@@ -155,7 +155,21 @@ function(cxx_library_with_type name type cxx_flags)
   find_package(Sanitizers)
 
   if(Sanitizers_FOUND)
-     add_sanitize_thread(${name})
+    if(SANITIZE_THREAD)
+        add_sanitize_thread(${PROJECT_NAME})
+    endif(SANITIZE_THREAD)
+
+    if(SANITIZE_ADDRESS)
+        add_sanitize_address(${PROJECT_NAME})
+    endif(SANITIZE_ADDRESS)
+
+    if(SANITIZE_MEMORY)
+        add_sanitize_memory(${PROJECT_NAME})
+    endif(SANITIZE_MEMORY)
+
+    if(SANITIZE_UNDEFINED)
+        add_sanitize_undefined(${PROJECT_NAME})
+    endif(SANITIZE_UNDEFINED)
   endif()
 
   add_library(${cmake_package_name}::${name} ALIAS ${name})
